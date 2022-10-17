@@ -69,12 +69,14 @@
                     <label>Quantity:</label>
                   </div>
                   <div class="cell">
+                    <!-- v-model.number="inventory.carrots" -->
                     <input type="number" v-model.number="inventory.carrots">
                   </div>
                 </div>
               </form>
             </div>
             <div class="card-footer">
+              <!-- @click="addToCart('carrots')" -->
               <button @click="addToCart('carrots')" class="btn btn-light">
                 Add to cart
               </button>
@@ -109,6 +111,7 @@
                     <label>Quantity:</label>
                   </div>
                   <div class="cell">
+                    <!-- v-model="inventory.pineapples" -->
                     <input type="number" v-model="inventory.pineapples">
                   </div>
                 </div>
@@ -147,6 +150,7 @@
                     <label>Quantity:</label>
                   </div>
                   <div class="cell">
+                    <!-- v-model="inventory.cherries" -->
                     <input type="number" v-model="inventory.cherries">
                   </div>
                 </div>
@@ -165,17 +169,21 @@
       </footer>
 
     </div>
-      
+
+    <!-- adding all script -->
     <script src="https://unpkg.com/vue@next"></script>
     <script>
       let app = Vue.createApp({
+      // data
         data() {
           return {
+            // المخزون
             inventory: {
               carrots: 0,
               pineapples: 0,
               cherries: 0
             },
+            // عربة التسوق
             cart: {
               carrots: 0,
               pineapples: 0,
@@ -183,7 +191,10 @@
             }
           }
         },
+        // methods
         methods: {
+          // أضف العدد من النوع الموجود في المخزون إلى الموجود في السلة
+          // اعرض الأعداد الموجودة في السلة
           addToCart(type) {
             this.cart[type] += this.inventory[type]
             console.log(this.cart)
