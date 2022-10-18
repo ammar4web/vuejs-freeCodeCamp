@@ -92,6 +92,7 @@
         :toggle="toggleSidebar"
         :cart="cart"
         :inventory="inventory"
+        :remove="removeItem"
         />
 
       <footer>
@@ -126,6 +127,10 @@
           //
           toggleSidebar() {
             this.showSidebar = !this.showSidebar;
+          },
+          //
+          removeItem(name) {
+            delete this.cart[name];
           }
         },
 
@@ -138,7 +143,7 @@
       })
 
       app.component('sidebar', {
-        props: ['toggle', 'cart', 'inventory'],
+        props: ['toggle', 'cart', 'inventory', 'remove'],
         computed: {
 
         },
@@ -189,7 +194,7 @@
                       <td class="center">{{ quantity }}</td>
                       <td>$ {{ getPrice(key) * quantity }}</td>
                       <td class="center">
-                        <button class="btn btn-light cart-remove">
+                        <button @click="remove(key)" class="btn btn-light cart-remove">
                           &times;
                         </button>
                       </td>
