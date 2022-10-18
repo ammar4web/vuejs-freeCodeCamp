@@ -25,7 +25,8 @@
         </nav>
         <a @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
-          <span>Cart (0)</span>
+          <!-- الرقم جانب عربة التسوق (عدد المنتجات) -->
+          <span>Cart ({{ totalQuantity }})</span>
         </a>
       </header>
 
@@ -114,6 +115,14 @@
             cart: {}
           }
         },
+        computed: {
+          // من أجل الرقم المنتجات جانب عربة التسوق
+          totalQuantity() {
+            return Object.values(this.cart).reduce((acc, curr) => {
+              return acc + curr
+            }, 0)
+          }
+        },
         // methods
         methods: {
           // أضف العدد من النوع الموجود في المخزون إلى الموجود في السلة
@@ -122,6 +131,8 @@
             console.log(name, index);
             if (!this.cart[name]) this.cart[name] = 0;
             this.cart[name] += this.inventory[index].quantity;
+            // تصفير مربع إدخال كمية المنتج
+            this.inventory[index].quantity = 0;
             console.log(this.cart);
           },
           //
@@ -192,7 +203,8 @@
                       <td>{{ key }}</td>
                       <td>$ {{ getPrice(key) }}</td>
                       <td class="center">{{ quantity }}</td>
-                      <td>$ {{ getPrice(key) * quantity }}</td>
+                      <!-- تجميل ظهور الفواصل العشرية إلى رقمين فقط بعد الفاصلة -->
+                      <td>$ {{ (getPrice(key) * quantity).toFixed(2) }}</td>
                       <td class="center">
                         <button @click="remove(key)" class="btn btn-light cart-remove">
                           &times;
